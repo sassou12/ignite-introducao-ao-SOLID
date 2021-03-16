@@ -1,0 +1,390 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Ignite - Introdução ao SOLID",
+        "description": "This is a challenge docs with Swagger",
+        "version": "1.0.0",
+        "contact": {
+            "email": "ignite.nodejs@rocketseat.com.br"
+        }
+    },
+    "paths": {
+        "/users":{
+            "post": {
+                "tags": ["Users"],
+                "summary": "Create user",
+                "description": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Ciclano Generic Brazilian Guy",
+                                    "email": "ciclano.gbc@gbc.cic.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "created_at": {
+                                            "type":"string",
+                                            "format": "date"
+                                        },
+                                        "updated_at": {
+                                            "type":"string",
+                                            "format": "date"
+                                        },
+                                        "id": {
+                                            "type":"string"
+                                        },
+                                        "name": {
+                                            "type":"string"
+                                        },
+                                        "email": {
+                                            "type":"string"
+                                        },
+                                        "admin": {
+                                            "type":"boolean"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "13f5ef18-601a-4b35-8e3d-e6decfdf1e76",
+                                        "created_at": "2021-03-16T17:09:40.777Z",
+                                        "updated_at": "2021-03-16T17:09:40.777Z",
+                                        "admin": false,
+                                        "name": "Ciclano Generic Brazilian Guy",
+                                        "email": "ciclano.gbc@gbc.cic.com"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Email already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Users"],
+                "summary": "List users",
+                "description": "List all users",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "created_at": {
+                                                "type":"string",
+                                                "format": "date"
+                                            },
+                                            "updated_at": {
+                                                "type":"string",
+                                                "format": "date"
+                                            },
+                                            "id": {
+                                                "type":"string"
+                                            },
+                                            "name": {
+                                                "type":"string"
+                                            },
+                                            "email": {
+                                                "type":"string"
+                                            },
+                                            "admin": {
+                                                "type":"boolean"
+                                            }
+                                        }
+                                    },
+                                    "example": [
+                                        {
+                                            "id": "13f5ef18-601a-4b35-8e3d-e6decfdf1e76",
+                                            "created_at": "2021-03-16T17:09:40.777Z",
+                                            "updated_at": "2021-03-16T17:09:40.777Z",
+                                            "admin": false,
+                                            "name": "Ciclano Generic Brazilian Guy",
+                                            "email": "ciclano.gbc@gbc.cic.com"
+                                        },
+                                        {
+                                            "id": "13f5ef18-601a-4b35-8e3d-e6decfdf1e76",
+                                            "created_at": "2021-03-16T17:09:40.777Z",
+                                            "updated_at": "2021-03-16T17:09:40.777Z",
+                                            "admin": false,
+                                            "name": "Ciclano Generic Brazilian Guy",
+                                            "email": "ciclano.gbc@gbc.cic.com"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Action forbidden or user is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": ["Users"],
+                "summary": "Detail user",
+                "description": "Detail a specific user",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "created_at": {
+                                            "type":"string",
+                                            "format": "date"
+                                        },
+                                        "updated_at": {
+                                            "type":"string",
+                                            "format": "date"
+                                        },
+                                        "id": {
+                                            "type":"string"
+                                        },
+                                        "name": {
+                                            "type":"string"
+                                        },
+                                        "email": {
+                                            "type":"string"
+                                        },
+                                        "admin": {
+                                            "type":"boolean"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "13f5ef18-601a-4b35-8e3d-e6decfdf1e76",
+                                        "created_at": "2021-03-16T17:09:40.777Z",
+                                        "updated_at": "2021-03-16T17:09:40.777Z",
+                                        "admin": false,
+                                        "name": "Ciclano Generic Brazilian Guy",
+                                        "email": "ciclano.gbc@gbc.cic.com"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "tags": ["Users"],
+                "summary": "Turn user in admin",
+                "description": "Turn user in admin",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "created_at": {
+                                            "type":"string",
+                                            "format": "date"
+                                        },
+                                        "updated_at": {
+                                            "type":"string",
+                                            "format": "date"
+                                        },
+                                        "id": {
+                                            "type":"string"
+                                        },
+                                        "name": {
+                                            "type":"string"
+                                        },
+                                        "email": {
+                                            "type":"string"
+                                        },
+                                        "admin": {
+                                            "type":"boolean"
+                                        }
+                                    },
+                                    "example": {
+                                        "id": "13f5ef18-601a-4b35-8e3d-e6decfdf1e76",
+                                        "created_at": "2021-03-16T17:09:40.777Z",
+                                        "updated_at": "2021-03-16T17:09:40.777Z",
+                                        "admin": true,
+                                        "name": "Ciclano Generic Brazilian Guy",
+                                        "email": "ciclano.gbc@gbc.cic.com"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User is not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }, 
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
